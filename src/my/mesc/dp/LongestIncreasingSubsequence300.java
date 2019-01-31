@@ -43,11 +43,36 @@ public class LongestIncreasingSubsequence300 {
 		return maxLen;
 	}
 
+	public static int lis(int[] nums) {
+		if (nums.length == 0) {
+			return 0;
+		}
+		if (nums.length == 1) {
+			return 1;
+		}
+
+		int maxVal = Integer.MIN_VALUE;
+		int aux[] = new int[nums.length];
+		aux[0] = 1;
+
+		for (int i = 1; i < nums.length; i++) {
+			int max = 0;
+			for (int j = 0; j < i; j++) {
+				if (nums[i] > nums[j]) {
+					max = Math.max(max, aux[j]);
+				}
+			}
+			aux[i] = max + 1;
+			maxVal = Math.max(maxVal, aux[i]);
+		}
+		return maxVal;
+	}
+
 	public static void main(String[] args) {
-		int[] nums = {  8,2, 5, 9};
+		int[] nums = { 10, 9, 2, 5, 3, 7, 101, -18 };
 		Map<Integer, Integer> map = new HashMap<>();
 
-		System.out.println(lis(nums, 0, Integer.MIN_VALUE, map));
+		System.out.println(lis(nums));
 		System.out.println(map);
 	}
 }
